@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romel's Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: url("bg.png");
+            min-height: 100vh;
+            padding-bottom: 40px;
+            position: relative;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #8b9d83;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #75876d;
+            transform: scale(1.1);
+        }
+
+        .profile-container {
+            max-width: 940px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-photo {
+            width: 100%;
+            height: 400px;
+            background: url('memories/img2.PNG');
+            background-size:100% 100%;
+            position: relative;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .profile-header {
+            padding: 0 32px;
+            position: relative;
+        }
+
+        .profile-picture-section {
+            display: flex;
+            align-items: flex-end;
+            padding-top: 16px;
+            margin-top: -80px;
+            position: relative;
+        }
+
+        .profile-picture {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background: #e4e6eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            color: #65676b;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+            padding: 20px 0 0 24px;
+        }
+
+        .profile-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #050505;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-name .heart {
+            font-size: 24px;
+            color: #f02849;
+        }
+
+        .profile-details {
+            margin-top: 8px;
+            color: #65676b;
+            font-size: 15px;
+        }
+
+        .profile-details div {
+            margin: 4px 0;
+        }
+
+        .fb-link {
+            color: #1877f2;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .fb-link:hover {
+            text-decoration: underline;
+        }
+
+        .nav-tabs {
+            border-top: 1px solid #dadde1;
+            display: flex;
+            gap: 8px;
+            padding: 0 32px;
+            margin-top: 16px;
+        }
+
+        .nav-tab {
+            padding: 16px 16px 14px;
+            color: #65676b;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab.active {
+            color: #1877f2;
+            border-bottom-color: #1877f2;
+        }
+
+        .nav-tab:hover {
+            background: #f2f3f5;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .content-section {
+            max-width: 940px;
+            margin: 16px auto;
+            padding: 0 32px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #050505;
+            margin-bottom: 16px;
+            padding: 20px 0 8px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 4px;
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: #f0f2f5;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-photo {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #bcc0c4;
+        }
+
+        .upload-prompt {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #65676b;
+            font-size: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .cover-photo {
+                height: 200px;
+            }
+
+            .profile-picture-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-info {
+                padding: 16px 0 0 0;
+            }
+
+            .profile-name {
+                justify-content: center;
+                font-size: 28px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .content-section,
+            .profile-header,
+            .nav-tabs {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html' + window.location.search" title="Back">←</button>
+
+    <div class="profile-container">
+        <div class="cover-photo"></div>
+        
+        <div class="profile-header">
+            <div class="profile-picture-section">
+                <div class="profile-picture">
+                    <img src="photos of him/05D5471A-EF13-45E0-BDDC-AF12D78AFD89.jpg" alt="Romel">
+                </div>
+                <div class="profile-info">
+                    <div class="profile-name">
+                        Romel 
+                        <span class="heart">🤍</span>
+                    </div>
+                    <div class="profile-details">
+                        <div>📅 December 4, 2000</div>
+                        <a href="https://www.facebook.com/share/178byS2cqW/?mibextid=wwXIfr" class="fb-link" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg> Facebook Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-tab active">Fave Photos of you</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <div class="section-title">Fave Photos of you</div>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="photos of him/05D5471A-EF13-45E0-BDDC-AF12D78AFD89.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/44CFE64D-A220-4EDA-8C80-FCBB711CA6D4.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/4DB3576B-013E-4569-ADDF-132A730DD9B1.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/4E2617EF-835B-41D5-AD10-C38C070F6699.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/6DFC9ADE-1395-4327-B303-36740CDAB383.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/att.8cUpBGET-pJcmcsvXTl1ilKjBVpWuYvgPLcDzgrWD-A.jpg" alt="Photo">
+            </div>
+            <div class="gallery-item">
+                <img src="photos of him/CDA8C91A-C829-4FAE-A293-F6E674F19675.jpg" alt="Photo">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication status on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authenticated = urlParams.get('auth');
+
+            if (authenticated !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Memories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+             background: url("bg.png");
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            background: linear-gradient(135deg, #c0cbff 0%, #b6c1ff 100%);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #8b9d83;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #75876d;
+            transform: scale(1.1);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .content p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 450px;
+            margin: 60px auto 20px;
+            overflow: visible;
+        }
+
+        .image-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 50%;
+            top: 50%;
+            transform-origin: center center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .image {
+            border-radius: 2em;
+            width: 100%;
+            height: 100%;
+            border: 15px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-container.active {
+            transform: translate(-50%, -50%) rotate(0deg) scale(1.05) !important;
+            z-index: 999 !important;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .carousel-btn {
+            background: #5d6b54;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: #4a5544;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .carousel {
+                max-width: 400px;
+                height: 300px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()" title="Back">←</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Photo Memories</h1>
+        </div>
+        <div class="content">
+            <p>Here are some cherished photo memories...</p>
+            <div class="carousel" id="carousel">
+
+                <div class="image-container">
+                    <img src="memories/img2.PNG" class="image" alt="Memory 2">
+                </div>
+                <div class="image-container">
+                    <img src="memories/img4.JPG" class="image" alt="Memory 4">
+                </div>
+                <div class="image-container">
+                    <img src="memories/img5.JPG" class="image" alt="Memory 5">
+                </div>
+                <div class="image-container">
+                    <img src="memories/img6.jpg" class="image" alt="Memory 6">
+                </div>
+                <div class="image-container">
+                    <img src="memories/img7.jpg" class="image" alt="Memory 7">
+                </div>
+                <div class="image-container">
+                    <img src="memories/img8.JPG" class="image" alt="Memory 8">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication status on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authenticated = urlParams.get('auth');
+
+            if (authenticated !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Back button function
+        function goBack() {
+            const urlParams = new URLSearchParams(window.location.search);
+            window.location.href = 'index.html' + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        }
+
+        // Stack carousel functionality
+        const imageContainers = document.querySelectorAll(".image-container");
+        let isAnimating = false;
+
+        // Set initial z-index
+        imageContainers.forEach((container, index) => {
+            container.style.zIndex = (imageContainers.length - index).toString();
+            container.style.transform = `translate(-50%, -50%) rotate(${(index % 2 === 0 ? -1 : 1) * (3 + index)}deg)`;
+        });
+
+        function rotateStack(direction) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const containers = Array.from(imageContainers);
+
+            if (direction === 'next') {
+                // Move top card to bottom and shift all others up
+                containers.forEach(c => {
+                    const currentZ = parseInt(c.style.zIndex);
+                    if (currentZ === imageContainers.length) {
+                        // Top card goes to bottom
+                        c.style.zIndex = '1';
+                    } else {
+                        // All others move up one level
+                        c.style.zIndex = (currentZ + 1).toString();
+                    }
+                });
+            } else if (direction === 'prev') {
+                // Move bottom card to top and shift all others down
+                containers.forEach(c => {
+                    const currentZ = parseInt(c.style.zIndex);
+                    if (currentZ === 1) {
+                        // Bottom card goes to top
+                        c.style.zIndex = imageContainers.length.toString();
+                    } else {
+                        // All others move down one level
+                        c.style.zIndex = (currentZ - 1).toString();
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600);
+        }
+
+        // Click to advance to next
+        imageContainers.forEach((container) => {
+            container.addEventListener("click", function() {
+                rotateStack('next');
+            });
+        });
+
+        // Auto loop
+        setInterval(() => rotateStack('next'), 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Songs That Remind Me of You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: url("bg.png");
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #8b9d83;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            background: #75876d;
+            transform: scale(1.1);
+        }
+
+        .container {
+            background: #f5f1e8;
+            border-radius: 30px;
+            padding: 60px 40px 40px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #4a5244;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #8b9177;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .vinyl-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
+        }
+
+        .now-playing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #5d6b54;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 11px;
+            z-index: 10;
+            letter-spacing: 0.5px;
+        }
+
+        .vinyl-record {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #2d3a28 30%, #1a2418 70%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            animation: spin 8s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl-record.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl-grooves {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: repeating-radial-gradient(
+                circle at center,
+                transparent 0px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 4px
+            );
+        }
+
+        .vinyl-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45%;
+            height: 45%;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .vinyl-label img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .vinyl-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15%;
+            height: 15%;
+            background: #1a1a1a;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .song-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .song-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .music-icon {
+            width: 24px;
+            height: 24px;
+            color: #5d6b54;
+        }
+
+        .song-title h2 {
+            font-size: 20px;
+            color: #2d3a28;
+            font-weight: 600;
+        }
+
+        .song-artist {
+            font-size: 15px;
+            color: #8b9177;
+            margin-left: 36px;
+            margin-bottom: 15px;
+        }
+
+        .song-quote {
+            font-size: 13px;
+            color: #6b7566;
+            font-style: italic;
+            line-height: 1.6;
+            padding: 15px;
+            background: #f9f7f3;
+            border-radius: 10px;
+            border-left: 3px solid #8b9d83;
+            margin-bottom: 15px;
+        }
+
+        .spotify-embed {
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: none;
+            background: #5d6b54;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(93, 107, 84, 0.3);
+        }
+
+        .control-btn:hover {
+            background: #4a5544;
+            transform: scale(1.05);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .control-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .control-btn.play-pause {
+            width: 65px;
+            height: 65px;
+            background: #4a5544;
+        }
+
+        .control-btn.play-pause:hover {
+            background: #3a4434;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #c5c9be;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #5d6b54;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .decorative-leaf {
+            position: fixed;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .leaf-1 {
+            top: 50px;
+            left: 50px;
+            font-size: 30px;
+        }
+
+        .leaf-2 {
+            bottom: 80px;
+            left: 60px;
+            font-size: 25px;
+        }
+
+        .leaf-3 {
+            top: 100px;
+            right: 80px;
+            font-size: 28px;
+        }
+
+        .leaf-4 {
+            bottom: 50px;
+            right: 50px;
+            font-size: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px 30px;
+            }
+
+            .vinyl-container {
+                width: 240px;
+                height: 240px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .decorative-leaf {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="goBack()" title="Back">←</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Songs That Remind Me of You</h1>
+        </div>
+        <p class="subtitle">A collection of melodies that bring back our memories</p>
+
+        <div class="vinyl-container">
+            <div class="now-playing-badge">Now Playing</div>
+            <div class="vinyl-record" id="vinylRecord">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                    <img id="albumCover" src="album/album1.jpg" alt="Album Cover">
+                </div>
+                <div class="vinyl-center"></div>
+            </div>
+        </div>
+
+        <div class="song-info-card">
+            <div class="song-title">
+                <svg class="music-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+                <h2 id="songTitle">Song Title</h2>
+            </div>
+            <p class="song-artist" id="songArtist">Artist Name</p>
+            <div class="song-quote" id="songQuote">
+                "Every time I listen to this song, I always think of how you're willing to sacrifice for me no matter what."
+            </div>
+            
+            <audio id="audioPlayer" style="width: 100%; margin-top: 10px;" controls>
+                <source id="audioSource" src="music/song1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="prevBtn" title="Previous">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
+                </svg>
+            </button>
+            <button class="control-btn play-pause" id="playPauseBtn" title="Play/Pause">
+                <svg id="playIcon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+                <svg id="pauseIcon" fill="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                </svg>
+            </button>
+            <button class="control-btn" id="nextBtn" title="Next">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="dots" id="dotsContainer">
+            <div class="dot active" data-index="0"></div>
+            <div class="dot" data-index="1"></div>
+            <div class="dot" data-index="2"></div>
+            <div class="dot" data-index="3"></div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authenticated = urlParams.get('auth');
+            if (authenticated !== 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function goBack() {
+            const urlParams = new URLSearchParams(window.location.search);
+            window.location.href = 'index.html' + (urlParams.toString() ? '?' + urlParams.toString() : '');
+        }
+
+        // Music player data
+        const songs = [
+            { title: "Wherever You Will Go", artist: "The Calling", file: "music/song1.mp3", album: "album/album1.png", quote: "Every time I listen to this song, I always think of how you're willing to sacrifice for me no matter what." },
+            { title: "Sunday Morning", artist: "Maroon 5", file: "music/song2.mp3", album: "album/album2.png", quote: "This melody reminds me of all the beautiful moments we've shared together." },
+            { title: "You and Me", artist: "Lifehouse", file: "music/song3.mp3", album: "album/album3.jpg", quote: "The perfect soundtrack to all our cherished memories together." },
+            { title: "Breakeven", artist: "The Script", file: "music/song4.mp3", album: "album/album4.jpg", quote: "Whenever I hear this, I'm transported back to those precious memories with you." },
+            { title: "Iris", artist: "Goo Goo Dolls", file: "music/song5.mp3", album: "album/album5.png", quote: "The lyrics speak to my heart and remind me of your kindness and love." },
+            { title: "Sila", artist: "SUD", file: "music/song6.mp3", album: "album/album6.jpg", quote: "This song captures the essence of what you mean to me." },
+            { title: "I'll Be", artist: "Edwin McCain", file: "music/song7.mp3", album: "album/album7.jpg", quote: "Every note brings back the warmth of your smile." },
+            { title: "Balisong", artist: "Rivermaya", file: "music/song8.mp3", album: "album/album8.jpg", quote: "A beautiful reminder of the journey we've taken together." },
+            { title: "Ewan", artist: "Apo Hiking Society", file: "music/song9.mp3", album: "album/album9.jpg", quote: "This tune perfectly describes how grateful I am to have you in my life." },
+            { title: "The Only Exception", artist: "Paramore", file: "music/song10.mp3", album: "album/album10.jpg", quote: "Listening to this always makes me appreciate you even more." },
+        ];
+
+        let currentIndex = 0;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+        const albumCover = document.getElementById('albumCover');
+        const songTitle = document.getElementById('songTitle');
+        const songArtist = document.getElementById('songArtist');
+        const songQuote = document.getElementById('songQuote');
+        const vinylRecord = document.getElementById('vinylRecord');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const dotsContainer = document.getElementById('dotsContainer');
+
+        function loadSong(index) {
+            const song = songs[index];
+            audioSource.src = song.file;
+            albumCover.src = song.album;
+            songTitle.textContent = song.title;
+            songArtist.textContent = song.artist;
+            songQuote.textContent = `"${song.quote}"`;
+            audioPlayer.load();
+            updateDots();
+            // Autoplay the song
+            audioPlayer.play().catch(e => console.log('Autoplay prevented:', e));
+        }
+
+        function updatePlayPauseIcon() {
+            if (audioPlayer.paused) {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            } else {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            }
+        }
+
+        function updateDots() {
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+            loadSong(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % songs.length;
+            loadSong(currentIndex);
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+            } else {
+                audioPlayer.pause();
+            }
+        });
+
+        // Dot navigation
+        dotsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('dot')) {
+                currentIndex = parseInt(e.target.dataset.index);
+                loadSong(currentIndex);
+            }
+        });
+
+        // Vinyl animation
+        audioPlayer.addEventListener('play', () => {
+            vinylRecord.classList.add('playing');
+            updatePlayPauseIcon();
+        });
+
+        audioPlayer.addEventListener('pause', () => {
+            vinylRecord.classList.remove('playing');
+            updatePlayPauseIcon();
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            vinylRecord.classList.remove('playing');
+            updatePlayPauseIcon();
+        });
+
+        // Auto-next song
+        audioPlayer.addEventListener('ended', () => {
+            currentIndex = (currentIndex + 1) % songs.length;
+            loadSong(currentIndex);
+            audioPlayer.play();
+        });
+
+        // Create dots dynamically
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            songs.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === 0) dot.classList.add('active');
+                dot.dataset.index = index;
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Initialize
+        createDots();
+        loadSong(currentIndex);
+    </script>
+</body>
+</html> 
