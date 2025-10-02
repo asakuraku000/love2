@@ -1,347 +1,434 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>About Us</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-            body {
-                font-family: 'Georgia', serif;
-                background: url("bg.png");
-                min-height: 100vh;
-                padding: 20px;
-                padding-top: 80px;
-                position: relative;
-            }
+        body {
+            font-family: 'Georgia', serif;
+            background: url("bg.png");
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 80px;
+            position: relative;
+        }
 
-            .back-btn {
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                background: #8b9d83;
-                color: white;
-                border: none;
-                width: 45px;
-                height: 45px;
-                border-radius: 50%;
-                cursor: pointer;
-                font-size: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-            }
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #8b9d83;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
 
-            .back-btn:hover {
-                background: #75876d;
-                transform: scale(1.1);
-            }
+        .back-btn:hover {
+            background: #75876d;
+            transform: scale(1.1);
+        }
 
-            .container {
-                max-width: 900px;
-                margin: 0 auto;
-            }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-            .title {
-                text-align: center;
-                font-size: 28px;
-                font-weight: bold;
-                color: #333;
-                margin-bottom: 30px;
-            }
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
 
-            .countdown-card {
-                background: linear-gradient(135deg, #c0cbff 0%, #b6c1ff 100%);
-                border-radius: 30px;
-                padding: 40px 30px;
-                text-align: center;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                margin-bottom: 40px;
-                text-shadow: 0px 0px 2px black;
-            }
+        .countdown-card {
+            background: linear-gradient(135deg, #c0cbff 0%, #b6c1ff 100%);
+            border-radius: 30px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+            text-shadow: 0px 0px 2px black;
+        }
 
-            .countdown-title {
-                font-size: 24px;
-                color: #fff;
-                margin-bottom: 10px;
-                font-weight: 600;
-            }
+        .countdown-title {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
 
-            .countdown-subtitle {
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.9);
-                margin-bottom: 20px;
-            }
+        .countdown-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
 
-            .profile-pic {
-                width: 216px;
-                height: 216px;
-                border-radius: 50%;
-                background: #fff;
-                margin: 20px auto;
-                overflow: hidden;
-                border: 4px solid #fff;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 48px;
-            }
+        .profile-pic {
+            width: 216px;
+            height: 216px;
+            border-radius: 50%;
+            background: #fff;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
 
-            .profile-pic img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .time-unit {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            min-width: 70px;
+        }
+
+        .time-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            display: block;
+        }
+
+        .time-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .start-date {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin: 30px 0 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .emoji-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .photo-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: white;
+            color: #333;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .lightbox-close:hover {
+            background: #f0f0f0;
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 600px) {
             .countdown-display {
-                display: flex;
-                justify-content: center;
-                gap: 15px;
-                margin: 30px 0;
+                gap: 10px;
             }
 
             .time-unit {
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 15px;
-                padding: 15px;
-                min-width: 70px;
+                min-width: 60px;
+                padding: 10px;
             }
 
             .time-number {
-                font-size: 32px;
-                font-weight: bold;
-                color: #fff;
-                display: block;
-            }
-
-            .time-label {
-                font-size: 12px;
-                color: rgba(255, 255, 255, 0.9);
-                text-transform: uppercase;
-                display: block;
-                margin-top: 5px;
-            }
-
-            .start-date {
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.9);
-                margin-top: 20px;
-            }
-
-            .section-title {
-                font-size: 20px;
-                color: #333;
-                margin: 30px 0 20px;
-                text-align: center;
-                font-weight: 600;
-            }
-
-            .emoji-text {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
+                font-size: 24px;
             }
 
             .photo-gallery {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-                margin-top: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
             }
 
-            .photo-item {
-                aspect-ratio: 1;
-                background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 48px;
-                transition: transform 0.3s;
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
             }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html' + window.location.search" title="Back">←</button>
 
-            .photo-item:hover {
-                transform: scale(1.05);
-            }
+    <div class="container">
+        <div class="title">ABOUT US</div>
 
-            .photo-item img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            @media (max-width: 600px) {
-                .countdown-display {
-                    gap: 10px;
-                }
-
-                .time-unit {
-                    min-width: 60px;
-                    padding: 10px;
-                }
-
-                .time-number {
-                    font-size: 24px;
-                }
-
-                .photo-gallery {
-                    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                    gap: 10px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <button class="back-btn" onclick="window.location.href='index.html' + window.location.search" title="Back">←</button>
-
-        <div class="container">
-            <div class="title">ABOUT US</div>
-
-            <div class="countdown-card">
-                <div class="countdown-title">Our Love Journey</div>
-                <div class="profile-pic">
-                    <img src="memories/img2.PNG" alt="Us">
-                </div>
-
-                <div class="countdown-display">
-                    <div class="time-unit">
-                        <span class="time-number" id="days">00</span>
-                        <span class="time-label">Days</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="hours">00</span>
-                        <span class="time-label">Hours</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="minutes">00</span>
-                        <span class="time-label">Minutes</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="seconds">00</span>
-                        <span class="time-label">Seconds</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="milliseconds">000</span>
-                        <span class="time-label">MS</span>
-                    </div>
-                </div>
-
-                <div class="start-date">Since August 10, 2025</div>
+        <div class="countdown-card">
+            <div class="countdown-title">Our Love Journey</div>
+            <div class="profile-pic">
+                <img src="memories/img2.PNG" alt="Us">
             </div>
 
-            <div class="section-title emoji-text">
-                <span>📸</span>
-                <span>Photos of me in case you miss me</span>
-                <span>😊❤️</span>
+            <div class="countdown-display">
+                <div class="time-unit">
+                    <span class="time-number" id="days">00</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="hours">00</span>
+                    <span class="time-label">Hours</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="minutes">00</span>
+                    <span class="time-label">Minutes</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="seconds">00</span>
+                    <span class="time-label">Seconds</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="milliseconds">000</span>
+                    <span class="time-label">MS</span>
+                </div>
             </div>
 
-            <div class="photo-gallery">
-                <div class="photo-item">
-                    <img src="My photos/IMG_0074.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_0376.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_1226.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_2381.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_2473.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_2528.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3082.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3398.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3404.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3405.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3406.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3407.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_3410.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_4356.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_6389.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_7898.PNG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_8176.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/IMG_8667.JPG" alt="Photo">
-                </div>
-                <div class="photo-item">
-                    <img src="My photos/PhotoGrid_Site_1733378390097.jpg" alt="Photo">
-                </div>
-            </div>
+            <div class="start-date">Since August 10, 2025</div>
         </div>
 
-        <script>
-            // Check authentication status on page load
-            window.addEventListener('DOMContentLoaded', function() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const authenticated = urlParams.get('auth');
+        <div class="section-title emoji-text">
+            <span>📸</span>
+            <span>Photos of me in case you miss me</span>
+            <span>😊❤️</span>
+        </div>
 
-                if (authenticated !== 'true') {
-                    window.location.href = 'index.html';
-                }
-            });
+        <div class="photo-gallery">
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_0074.JPG')">
+                <img src="My photos/IMG_0074.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_0376.PNG')">
+                <img src="My photos/IMG_0376.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_1226.PNG')">
+                <img src="My photos/IMG_1226.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_2381.JPG')">
+                <img src="My photos/IMG_2381.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_2473.JPG')">
+                <img src="My photos/IMG_2473.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_2528.JPG')">
+                <img src="My photos/IMG_2528.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3082.PNG')">
+                <img src="My photos/IMG_3082.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3398.PNG')">
+                <img src="My photos/IMG_3398.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3404.PNG')">
+                <img src="My photos/IMG_3404.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3405.PNG')">
+                <img src="My photos/IMG_3405.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3406.PNG')">
+                <img src="My photos/IMG_3406.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3407.PNG')">
+                <img src="My photos/IMG_3407.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_3410.JPG')">
+                <img src="My photos/IMG_3410.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_4356.JPG')">
+                <img src="My photos/IMG_4356.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_6389.JPG')">
+                <img src="My photos/IMG_6389.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_7898.PNG')">
+                <img src="My photos/IMG_7898.PNG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_8176.JPG')">
+                <img src="My photos/IMG_8176.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/IMG_8667.JPG')">
+                <img src="My photos/IMG_8667.JPG" alt="Photo">
+            </div>
+            <div class="photo-item" onclick="openLightbox('My photos/PhotoGrid_Site_1733378390097.jpg')">
+                <img src="My photos/PhotoGrid_Site_1733378390097.jpg" alt="Photo">
+            </div>
+        </div>
+    </div>
 
-            // Countdown timer
-            const startDate = new Date('August 10, 2025 00:00:00').getTime();
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <img id="lightbox-img" src="" alt="Full size photo">
+        </div>
+    </div>
 
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const timeDiff = now - startDate;
+    <script>
+        // Check authentication status on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authenticated = urlParams.get('auth');
 
-                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-                const milliseconds = Math.floor(timeDiff % 1000);
-
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-                document.getElementById('milliseconds').textContent = String(milliseconds).padStart(3, '0');
+            if (authenticated !== 'true') {
+                window.location.href = 'index.html';
             }
+        });
 
-            // Update countdown immediately and then every millisecond
-            updateCountdown();
-            setInterval(updateCountdown, 1);
-        </script>
-    </body>
-    </html>
+        // Countdown timer
+        const startDate = new Date('August 10, 2025 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeDiff = now - startDate;
+
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            const milliseconds = Math.floor(timeDiff % 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            document.getElementById('milliseconds').textContent = String(milliseconds).padStart(3, '0');
+        }
+
+        // Update countdown immediately and then every millisecond
+        updateCountdown();
+        setInterval(updateCountdown, 1);
+
+        // Lightbox functions
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
